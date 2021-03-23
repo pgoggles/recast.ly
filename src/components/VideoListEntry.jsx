@@ -1,5 +1,5 @@
 var VideoListEntry = (props) => (
-  <div className="video-list-entry media">
+  <div className="video-list-entry media" onClick={() => (props.onListItemClick(props.video))}>
     <div className="media-left media-middle">
       <img className="media-object" src={props.video.snippet.thumbnails.default.url} alt="This image does not exist" />
     </div>
@@ -9,7 +9,7 @@ var VideoListEntry = (props) => (
     </div>
   </div>
 );
-
+// props.onListItemClick.bind(this, props.video)
 // PropTypes tell other developers what `props` a component expects
 // Warnings will be shown in the console when the defined rules are violated
 VideoListEntry.propTypes = {
@@ -19,3 +19,5 @@ VideoListEntry.propTypes = {
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
 export default VideoListEntry;
+
+
