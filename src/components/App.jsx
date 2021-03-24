@@ -8,50 +8,41 @@ import exampleVideoData from '../data/exampleVideoData.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {currentVideo: exampleVideoData[0]};
-  }
-  render() {
-    if (JSON.stringify(this.props) !== JSON.stringify({})) {
-      return (
-        <div>
-          <nav className="navbar">
-            <div className="col-md-6 offset-md-3">
-              <div><h5><em>search</em> <Search /> </h5></div>
-            </div>
-          </nav>
-          <div className="row">
-            <div className="col-md-7">
-              <div><h5><em>videoPlayer</em> <VideoPlayer video={this.state.currentVideo}/> </h5></div>
-            </div>
-            <div className="col-md-5">
-              <div><h5><em>videoList</em> <VideoList videos={this.props.videoData} onListItemClick={this.onListItemClick.bind(this)}/> </h5></div>
-            </div>
-          </div>
-        </div>
-      );
+    if (JSON.stringify(props) !== JSON.stringify({})) {
+      this.state = {currentVideo: props.videoData[0], videoData: props.videoData};
     } else {
-      return (
-        <div>
-          <nav className="navbar">
-            <div className="col-md-6 offset-md-3">
-              <div><h5><em>search</em> <Search /> </h5></div>
-            </div>
-          </nav>
-          <div className="row">
-            <div className="col-md-7">
-              <div><h5><em>videoPlayer</em> <VideoPlayer video={this.state.currentVideo}/> </h5></div>
-            </div>
-            <div className="col-md-5">
-              <div><h5><em>videoList</em> <VideoList videos={exampleVideoData} onListItemClick={this.onListItemClick.bind(this)}/> </h5></div>
-            </div>
-          </div>
-        </div>
-      );
+      this.state = {currentVideo: exampleVideoData[0], videoData: exampleVideoData};
     }
 
   }
+  render() {
+    return (
+      <div>
+        <nav className="navbar">
+          <div className="col-md-6 offset-md-3">
+            <div><h5><em>search</em> <Search parseVideoData={this.parseVideoData.bind(this)}/> </h5></div>
+          </div>
+        </nav>
+        <div className="row">
+          <div className="col-md-7">
+            <div><h5><em>videoPlayer</em> <VideoPlayer video={this.state.currentVideo}/> </h5></div>
+          </div>
+          <div className="col-md-5">
+            <div><h5><em>videoList</em> <VideoList videos={this.state.videoData} onListItemClick={this.onListItemClick.bind(this)}/> </h5></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   onListItemClick (video) {
     this.setState({currentVideo: video});
+  }
+
+  parseVideoData (data) {
+    console.log(data);
+    this.setState({videoData: data});
+    this.setState({currentVideo: data[0]});
   }
 
 }
